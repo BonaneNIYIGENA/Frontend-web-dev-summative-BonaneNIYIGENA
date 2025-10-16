@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regex Pattern Tester - Campus Life Planner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3f3e3e;
+            --primary-dark: #4f46e5;
+            --primary-light: #8b5cf6;
+            --secondary: #06d6a0;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-light: #94a3b8;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --border-radius: 12px;
+            --border-radius-sm: 8px;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #000000;
+            --bg-secondary: #484949;
+            --bg-card: #191b1c;
+            --text-primary: #ffffff;
+            --text-secondary: #cbd5e1;
+            --text-light: #94a3b8;
+            --border: #334155;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tester-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .tester-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--border-radius-sm);
+            font-size: 0.95rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .result-container {
+            margin-top: 20px;
+        }
+
+        .result-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .result-box {
+            padding: 15px;
+            border-radius: var(--border-radius-sm);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            min-height: 100px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+
+        .result-success {
+            border-left: 4px solid var(--success);
+        }
+
+        .result-error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .pattern-info {
+            margin-top: 30px;
+        }
+
+        .pattern-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pattern-card {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .pattern-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .pattern-card p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .pattern-example {
+            font-family: monospace;
+            background: var(--bg-primary);
+            padding: 10px;
+            border-radius: var(--border-radius-sm);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            z-index: 100;
+        }
+
+        .field-results {
+            margin-top: 20px;
+        }
+
+        .field-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: var(--border-radius-sm);
+            margin-bottom: 10px;
+            background: var(--bg-primary);
+            border-left: 4px solid var(--border);
+        }
+
+        .field-name {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .match-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .match-correct {
+            background: var(--success);
+            color: white;
+            border-left-color: var(--success);
+        }
+
+        .match-wrong {
+            background: var(--danger);
+            color: white;
+            border-left-color: var(--danger);
+        }
+
+        .field-patterns {
+            margin-top: 20px;
+        }
+
+        .field-pattern-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: var(--border-radius-sm);
+            background: var(--bg-primary);
+            border-left: 4px solid var(--primary);
+        }
+
+        .field-pattern-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .field-pattern-regex {
+            font-family: monospace;
+            background: var(--bg-secondary);
+            padding: 8px 12px;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--border);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .field-pattern-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .test-value {
+            font-family: monospace;
+            background: rgba(59, 130, 246, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        .icon-correct {
+            color: var(--success);
+        }
+
+        .icon-wrong {
+            color: var(--danger);
+        }
+
+        .test-summary {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: var(--border-radius-sm);
+            background: var(--bg-primary);
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .summary-correct {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .summary-wrong {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-code"></i> Regex Pattern Validator</h1>
+            <p>Test if your regex patterns correctly match field-specific patterns in the Campus Life Planner</p>
+        </header>
+
+        <div class="tester-container">
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-sliders-h"></i> Test Parameters</h2>
+                
+                <div class="form-group">
+                    <label class="form-label" for="testPattern">Your Regex Pattern</label>
+                    <input type="text" id="testPattern" class="form-input" placeholder="Enter your regex pattern" value="^[A-Za-z0-9\s\-&.,!?()]{1,100}$">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="testValue">Test Value</label>
+                    <input type="text" id="testValue" class="form-input" placeholder="Enter value to test" value="FrontEnd Web Development">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="fieldType">Field Type</label>
+                    <select id="fieldType" class="form-select">
+                        <option value="Title">Title</option>
+                        <option value="Date">Date</option>
+                        <option value="Start Time">Start Time</option>
+                        <option value="Duration">Duration</option>
+                        <option value="Location">Location</option>
+                        <option value="Description">Description</option>
+                        <option value="Category">Category</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary" id="testButton">
+                    <i class="fas fa-play"></i> Validate Pattern
+                </button>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-chart-bar"></i> Validation Results</h2>
+                
+                <div class="result-container">
+                    <h3 class="result-title">Your Pattern:</h3>
+                    <div id="patternUsed" class="result-box">No pattern tested yet</div>
+                    
+                    <h3 class="result-title" style="margin-top: 20px;">Test Value:</h3>
+                    <div id="testValueDisplay" class="result-box">No value tested yet</div>
+                    
+                    <h3 class="result-title" style="margin-top: 20px;">Validation Results:</h3>
+                    <div id="validationResults" class="field-results">
+                        <!-- Validation results will be displayed here -->
+                    </div>
+                    
+                    <div id="testSummary" class="test-summary">
+                        <!-- Test summary will be displayed here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pattern-info">
+            <h2 class="card-title"><i class="fas fa-info-circle"></i> Field-Specific Regex Patterns</h2>
+            <p style="margin-bottom: 20px; color: var(--text-secondary);">
+                These are the required regex patterns for each field type in the Campus Life Planner.
+            </p>
+            
+            <div class="field-patterns">
+                <div class="field-pattern-item">
+                    <div class="field-pattern-name">
+                        <i class="fas fa-heading"></i>
+                        Title Field Pattern
+                    </div>
+                    <div class="field-pattern-regex">/^[A-Za-z0-9\s\-&.,!?()]{1,100}$/</div>
+                    <div class="field-pattern-desc">Alphanumeric characters, spaces, hyphens, ampersands, and common punctuation. Maximum 100 characters.</div>
+                    <div class="test-value">Example: "FrontEnd Web Development"</div>
+                </div>
+                
+                <div class="field-pattern-item">
+                    <div class="field-pattern-name">
+                        <i class="fas fa-calendar"></i>
+                        Date Field Pattern
+                    </div>
+                    <div class="field-pattern-regex">/^\d{4}-\d{2}-\d{2}$/</div>
+                    <div class="field-pattern-desc">YYYY-MM-DD format (e.g., 2025-10-15)</div>
+                    <div class="test-value">Example: "2025-10-15"</div>
+                </div>
+                
+                <div class="field-pattern-item">
+                    <div class="field-pattern-name">
+                        <i class="fas fa-clock"></i>
+                        Start Time Field Pattern
+                    </div>
+                    <div class="field-pattern-regex">/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/</div>
+                    <div class="field-pattern-desc">24-hour format HH:MM (e.g., 14:00, 09:30)</div>
+                    <div class="test-value">Example: "14:00"</div>
+                </div>
+                
+                <div class="field-pattern-item">
+                    <div class="field-pattern-name">
+                        <i class="fas fa-hourglass-half"></i>
+                        Duration Field Pattern
+                    </div>
+                    <div class="field-pattern-regex">/^\d{1,4}$/</div>
+                    <div class="field-pattern-desc">Positive integers from 1 to 1440 minutes (24 hours)</div>
+                    <div class="test-value">Example: "90"</div>
+                </div>
+                
+                <div class="field-pattern-item">
+                    <div class="field-pattern-name">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Location Field Pattern
+                    </div>
+                    <div class="field-pattern-regex">/^[A-Za-z0-9\s\-.,&()]{1,50}$/</div>
+                    <div class="field-pattern-desc">Alphanumeric characters, spaces, hyphens, and common punctuation. Maximum 50 characters.</div>
+                    <div class="test-value">Example: "ALU Basketball Court"</div>
+                </div>
+                
+                <div class="field-pattern-item">
+                    <div class="field-pattern-name">
+                        <i class="fas fa-file-alt"></i>
+                        Description Field Pattern
+                    </div>
+                    <div class="field-pattern-regex">/^[A-Za-z0-9\s\-.,!?()&:;'"@#$%*+=]{0,500}$/</div>
+                    <div class="field-pattern-desc">Alphanumeric characters, spaces, and extended punctuation. Maximum 500 characters.</div>
+                    <div class="test-value">Example: "Weekly class session with Facilitator David"</div>
+                </div>
+                
+                <div class="field-pattern-item">
+                    <div class="field-pattern-name">
+                        <i class="fas fa-tag"></i>
+                        Category Field Pattern
+                    </div>
+                    <div class="field-pattern-regex">/^(Academics|Games&Fun|Extracalcular|Mission Curation Programs|Wellness activites)$/</div>
+                    <div class="field-pattern-desc">Exact match to one of the predefined category names</div>
+                    <div class="test-value">Example: "Academics"</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Field-specific regex patterns
+        const fieldPatterns = {
+            'Title': /^[A-Za-z0-9\s\-&.,!?()]{1,100}$/,
+            'Date': /^\d{4}-\d{2}-\d{2}$/,
+            'Start Time': /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/,
+            'Duration': /^\d{1,4}$/,
+            'Location': /^[A-Za-z0-9\s\-.,&()]{1,50}$/,
+            'Description': /^[A-Za-z0-9\s\-.,!?()&:;'"@#$%*+=]{0,500}$/,
+            'Category': /^(Academics|Games&Fun|Extracalcular|Mission Curation Programs|Wellness activites)$/
+        };
+
+        // Test values for each field
+        const testValues = {
+            'Title': 'FrontEnd Web Development',
+            'Date': '2025-10-15',
+            'Start Time': '14:00',
+            'Duration': '90',
+            'Location': 'ALU Basketball Court',
+            'Description': 'Weekly class session with Facilitator David',
+            'Category': 'Academics'
+        };
+
+        // Theme toggle functionality
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update button icon
+            const icon = this.querySelector('i');
+            if (newTheme === 'dark') {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+        });
+
+        // Initialize theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const themeIcon = document.querySelector('#themeToggle i');
+        if (savedTheme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+        }
+
+        // Update test value when field type changes
+        document.getElementById('fieldType').addEventListener('change', function() {
+            const fieldType = this.value;
+            document.getElementById('testValue').value = testValues[fieldType] || '';
+        });
+
+        // Test button functionality
+        document.getElementById('testButton').addEventListener('click', function() {
+            const patternText = document.getElementById('testPattern').value.trim();
+            const testValue = document.getElementById('testValue').value.trim();
+            const fieldType = document.getElementById('fieldType').value;
+            
+            if (!patternText) {
+                alert('Please enter a regex pattern.');
+                return;
+            }
+            
+            if (!testValue) {
+                alert('Please enter a test value.');
+                return;
+            }
+            
+            let userPattern;
+            let requiredPattern = fieldPatterns[fieldType];
+            
+            try {
+                userPattern = new RegExp(patternText);
+            } catch (e) {
+                document.getElementById('patternUsed').textContent = `Invalid regex pattern: ${e.message}`;
+                document.getElementById('patternUsed').className = 'result-box result-error';
+                document.getElementById('testValueDisplay').textContent = testValue;
+                document.getElementById('validationResults').innerHTML = '';
+                document.getElementById('testSummary').innerHTML = '';
+                return;
+            }
+            
+            // Display patterns and test value
+            document.getElementById('patternUsed').textContent = userPattern.source;
+            document.getElementById('patternUsed').className = 'result-box';
+            document.getElementById('testValueDisplay').textContent = testValue;
+            document.getElementById('testValueDisplay').className = 'result-box';
+            
+            // Test both patterns
+            const userMatches = userPattern.test(testValue);
+            const requiredMatches = requiredPattern.test(testValue);
+            const patternsMatch = userMatches === requiredMatches;
+            
+            // Display validation results
+            let resultsHTML = '';
+            
+            // User pattern result
+            resultsHTML += `
+                <div class="field-result-item ${userMatches ? 'match-correct' : 'match-wrong'}">
+                    <div class="field-name">
+                        <i class="fas ${userMatches ? 'fa-check icon-correct' : 'fa-times icon-wrong'}"></i>
+                        Your Pattern Result
+                    </div>
+                    <div class="match-status ${userMatches ? 'match-correct' : 'match-wrong'}">
+                        <i class="fas ${userMatches ? 'fa-check' : 'fa-times'}"></i>
+                        ${userMatches ? 'MATCH' : 'NO MATCH'}
+                    </div>
+                </div>
+            `;
+            
+            // Required pattern result
+            resultsHTML += `
+                <div class="field-result-item ${requiredMatches ? 'match-correct' : 'match-wrong'}">
+                    <div class="field-name">
+                        <i class="fas ${requiredMatches ? 'fa-check icon-correct' : 'fa-times icon-wrong'}"></i>
+                        Required Pattern Result
+                    </div>
+                    <div class="match-status ${requiredMatches ? 'match-correct' : 'match-wrong'}">
+                        <i class="fas ${requiredMatches ? 'fa-check' : 'fa-times'}"></i>
+                        ${requiredMatches ? 'MATCH' : 'NO MATCH'}
+                    </div>
+                </div>
+            `;
+            
+            // Pattern comparison result
+            resultsHTML += `
+                <div class="field-result-item ${patternsMatch ? 'match-correct' : 'match-wrong'}">
+                    <div class="field-name">
+                        <i class="fas ${patternsMatch ? 'fa-check icon-correct' : 'fa-times icon-wrong'}"></i>
+                        Pattern Comparison
+                    </div>
+                    <div class="match-status ${patternsMatch ? 'match-correct' : 'match-wrong'}">
+                        <i class="fas ${patternsMatch ? 'fa-check' : 'fa-times'}"></i>
+                        ${patternsMatch ? 'CORRECT' : 'WRONG'}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('validationResults').innerHTML = resultsHTML;
+            
+            // Display test summary
+            let summaryHTML = '';
+            if (patternsMatch) {
+                summaryHTML = `
+                    <div class="test-summary summary-correct">
+                        <i class="fas fa-check-circle"></i>
+                        SUCCESS: Your pattern produces the same result as the required pattern!
+                    </div>
+                `;
+            } else {
+                summaryHTML = `
+                    <div class="test-summary summary-wrong">
+                        <i class="fas fa-exclamation-circle"></i>
+                        FAILURE: Your pattern does not match the required pattern behavior!
+                    </div>
+                `;
+            }
+            
+            document.getElementById('testSummary').innerHTML = summaryHTML;
+        });
+
+        // Initialize with default values
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('testButton').click();
+        });
+    </script>
+</body>
+</html>
