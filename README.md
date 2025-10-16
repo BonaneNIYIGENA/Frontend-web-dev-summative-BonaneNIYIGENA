@@ -88,6 +88,7 @@ To run tests for form validation and sorting, open the `tests.html` file in your
 ## Demo Video
 
 [Demo Video](https://drive.google.com/file/d/1ElHtfOPU6Ez54qNLRnCGUBe-_tIPczJh/view?usp=sharing)
+[Figma Prototype](https://www.figma.com/proto/JqPOjgEDtyFS6kViENVplh/SUMMATIVE?node-id=2-2&p=f&t=1UqaEH7HcTxfMik5-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1)
 
 In the demo video, I showcase:
 - User Interface from ideation of the design to the final design
