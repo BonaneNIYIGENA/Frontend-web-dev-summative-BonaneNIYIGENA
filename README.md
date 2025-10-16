@@ -97,8 +97,6 @@ In the demo video, I showcase:
 
 ## Deployment
 The app is deployed and accessible via GitHub Pages.
-**GitHub Pages URL**: [https://your-username.github.io/campus-life-planner](https://your-username.github.io/campus-life-planner)
-
-**GitHub Repo**: [https://github.com/your-username/campus-life-planner](https://github.com/your-username/campus-life-planner)
+**GitHub Pages URL**: https://bonaneniyigena.github.io/Frontend-web-dev-summative-BonaneNIYIGENA/
 
 For any inquiries or suggestions, you can reach me via [email@example.com](mailto:email@b.niyigena@alustudent.com).
