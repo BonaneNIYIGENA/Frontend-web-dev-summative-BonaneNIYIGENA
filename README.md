@@ -99,3 +99,6 @@ To run tests for form validation and sorting, open the `tests.html` file in your
 - **Import JSON**: You can import event data using the "Import" option in settings. The data structure must be validated before loading.
 - **Export JSON**: Export your current events to a JSON file for backup or transfer.
 
+## Author
+Bonane NIYIGENA, ALU Student
+
