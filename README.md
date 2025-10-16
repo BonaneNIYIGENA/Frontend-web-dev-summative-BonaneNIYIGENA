@@ -96,5 +96,5 @@ In the demo video, I showcase:
 - Responsive design across multiple devices.
 
 ## Deployment
-The app is deployed and accessible via GitHub Pages.
+The app is deployed online and accessible via GitHub Pages.
 [**GitHub Pages URL**]:https://bonaneniyigena.github.io/Frontend-web-dev-summative-BonaneNIYIGENA/
