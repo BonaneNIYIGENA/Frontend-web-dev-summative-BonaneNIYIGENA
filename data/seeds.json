@@ -1,0 +1,68 @@
+{
+  "events": [
+    {
+      "id": "rec_sample_1",
+      "title": "FrontEnd Web Development",
+      "date": "2025-10-15",
+      "startTime": "14:00",
+      "duration": 90,
+      "location": "Ethiopia",
+      "tag": "Academics",
+      "description": "Weekly class session with Facilitator David",
+      "createdAt": "2025-10-15T10:00:00.000Z",
+      "updatedAt": "2025-10-15T10:00:00.000Z"
+    },
+    {
+      "id": "rec_sample_2",
+      "title": "Basketball Tournament Finals",
+      "date": "2025-10-15",
+      "startTime": "16:00",
+      "duration": 120,
+      "location": "ALU Bascktball Court",
+      "tag": "Games&Fun",
+      "description": "Championship finals of the inter-college basketball tournament",
+      "createdAt": "2025-10-15T10:00:00.000Z",
+      "updatedAt": "2025-10-15T10:00:00.000Z"
+    },
+    {
+      "id": "rec_sample_3",
+      "title": "Robotics Club",
+      "date": "2025-10-17",
+      "startTime": "13:00",
+      "duration": 360,
+      "location": "Robotics Club Lab",
+      "tag": "Extracalcular",
+      "description": "Showcase of student-built robots and AI projects",
+      "createdAt": "2025-10-15T10:00:00.000Z",
+      "updatedAt": "2025-10-15T10:00:00.000Z"
+    },
+    {
+      "id": "rec_sample_4",
+      "title": "Industry Mentorship Program",
+      "date": "2025-10-17",
+      "startTime": "09:00",
+      "duration": 120,
+      "location": "Leadership Center",
+      "tag": "Mission Curation Programs",
+      "description": "Connect with industry professionals for career guidance",
+      "createdAt": "2025-10-15T10:00:00.000Z",
+      "updatedAt": "2025-10-15T10:00:00.000Z"
+    },
+    {
+      "id": "rec_sample_5",
+      "title": "Yoga and Meditation Session",
+      "date": "2025-10-15",
+      "startTime": "07:00",
+      "duration": 60,
+      "location": "Kenya-Burundi",
+      "tag": "Wellness activites",
+      "description": "Morning yoga session for stress relief and mental clarity",
+      "createdAt": "2025-10-15T10:00:00.000Z",
+      "updatedAt": "2025-10-15T10:00:00.000Z"
+    }
+  ],
+  "version": "1.0",
+  "createdAt": "2025-10-15T10:00:00.000Z",
+  "totalEvents": 5,
+  "description": "Default sample events for Campus Life Planning Project"
+}

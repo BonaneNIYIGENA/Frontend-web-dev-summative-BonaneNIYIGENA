@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Life Planner</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu">
+        <span>☰</span>
+    </button>
+
+    <!-- Modern Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title-row">
+                <h1>Campus Life Planner</h1>
+                <button id="sidebarThemeToggle" class="btn theme-toggle-btn icon-only" onclick="toggleTheme()" aria-label="Toggle theme">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                </button>
+            </div>
+            <p>Tasks and Event Management</p>
+        </div>
+        
+        <nav class="nav-menu" aria-label="Main navigation">
+            <div class="nav-item active" onclick="showSection('dashboard')">
+                <span class="nav-icon"><i class="fas fa-chart-bar"></i></span>
+                Dashboard
+            </div>
+            <div class="nav-item" onclick="showSection('events')">
+                <span class="nav-icon"><i class="fas fa-list"></i></span>
+                Events
+            </div>
+            <div class="nav-item" onclick="showSection('form')">
+                <span class="nav-icon"><i class="fas fa-plus"></i></span>
+                Add Event
+            </div>
+            <div class="nav-item" onclick="showSection('about')">
+                <span class="nav-icon"><i class="fas fa-info-circle"></i></span>
+                About
+            </div>
+            <div class="nav-item" onclick="showSection('settings')">
+                <span class="nav-icon"><i class="fas fa-cog"></i></span>
+                Settings
+            </div>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="footer-copyright">
+                Campus Life Event/Tasks Planner © 2025
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="section-header">
+                <h2>Dashboard</h2>
+                <p>Plan campus tasks and event</p>
+            </div>
+            
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Total Events</span>
+                    </div>
+                    <div class="stat-value" id="totalEvents">0</div>
+                    <div class="stat-label">All scheduled events</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Total Rooms</span>
+                    </div>
+                    <div class="stat-value" id="totalHours">0</div>
+                    <div class="stat-label">Rooms in use today</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Top Category</span>
+                    </div>
+                    <div class="stat-value" id="topCategory">N/A</div>
+                    <div class="stat-label">Most popular activity</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Next Week</span>
+                    </div>
+                    <div class="stat-value" id="weekEvents">0</div>
+                    <div class="stat-label">Events in next 7 days</div>
+                </div>
+            </div>
+
+            <!-- Trend Chart -->
+            <div class="chart-container">
+                <h3 class="chart-title">
+                    <i class="fas fa-chart-bar"></i>Event Trend</h3>
+                <div id="trendInfo" class="trend-info"></div>
+                <div class="chart" id="trendChart"></div>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events" class="section">
+            <div class="section-header">
+                <h2>Event Records</h2>
+                <p>Manage and organize your campus events</p>
+            </div>
+            
+            <div class="table-container">
+                <div class="table-header">
+                    <h3 class="table-title">All Events</h3>
+                    <div class="table-actions">
+                        <input type="text" id="searchInput" class="form-input" 
+                            placeholder="Search events... (supports regex)" 
+                            style="min-width: 280px;">
+                    </div>
+                </div>
+                
+                <!-- Sorting Controls -->
+                <div class="sorting-controls">
+                    <div class="sorting-group">
+                        <span class="sort-label">Sort by:</span>
+                        <select id="sortSelect" class="sort-select">
+                            <option value="date">Date</option>
+                            <option value="title">Title</option>
+                            <option value="tag">Category</option>
+                            <option value="duration">Duration</option>
+                            <option value="location">Location</option>
+                        </select>
+                        <button id="sortDirection" class="sort-direction-btn">
+                            <i class="fas fa-sort-amount-up"></i> Ascending
+                        </button>
+                    </div>
+                    <span id="currentSortDisplay" class="current-sort-display">Sorted by: Date (Ascending)</span>
+                </div>
+                
+                <table id="eventsTable">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Date & Time</th>
+                            <th>Category</th>
+                            <th>Duration</th>
+                            <th>Location</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventsTableBody"></tbody>
+                </table>
+                <div class="cards-view" id="eventsCards"></div>
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <section id="form" class="section">
+            <div class="section-header">
+                <h2 id="formTitle">Add New Event</h2>
+                <p>Schedule a new campus activity or event</p>
+            </div>
+            
+            <div class="form-container">
+                <div id="formErrors" class="form-errors"></div>
+                <form id="eventForm" onsubmit="return saveEvent(event)">
+                    <input type="hidden" id="editId">
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="eventTitle">Event Title *</label>
+                        <input type="text" id="eventTitle" class="form-input" required 
+                               placeholder="Enter event title">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="eventDate">Event Date *</label>
+                            <input type="date" id="eventDate" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="eventStartTime">Start Time *</label>
+                            <input type="time" id="eventStartTime" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="eventDuration">Duration (minutes) *</label>
+                            <input type="number" id="eventDuration" class="form-input" min="1" required 
+                                   placeholder="120">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="eventLocation">Location</label>
+                            <input type="text" id="eventLocation" class="form-input" 
+                                   placeholder="Main Campus, Room 101">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="eventCategory">Category *</label>
+                        <select id="eventCategory" class="form-select" required>
+                            <option value="">Select category</option>
+                            <option value="Academics">Academics</option>
+                            <option value="Games&Fun">Sports</option>
+                            <option value="Extracalcular">Mission Curation Programs</option>
+                            <option value="Mission Curation Programs">Learning Experience</option>
+                            <option value="Wellness activites">Wellness Activities</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="eventDescription">Description</label>
+                        <textarea id="eventDescription" class="form-textarea" 
+                                 placeholder="Describe the event details, requirements, or any special instructions..."></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Event
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="showSection('events')">
+                            <i class="fas fa-arrow-left"></i> Back to Events
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings" class="section">
+            <div class="section-header">
+                <h2>Settings</h2>
+                <p>Manage your application preferences and data</p>
+            </div>
+            
+            <div class="settings-section">
+                <h3 class="settings-title">Data Management</h3>
+                
+                <div class="form-group">
+                    <div class="button-group">
+                        <button class="btn btn-primary" onclick="exportToSeedsJSON()">
+                            <i class="fas fa-download"></i> Export to JSON
+                        </button>
+                        <button class="btn btn-secondary" onclick="importFromSeedsJSON()">
+                            <i class="fas fa-upload"></i> Import from JSON
+                        </button>
+                        <button class="btn btn-secondary" onclick="exportToCSV()">
+                            <i class="fas fa-file-csv"></i> Export to CSV
+                        </button>
+                        <button class="btn btn-warning" onclick="resetToDefault()">
+                            <i class="fas fa-sync"></i> Reset to Default
+                        </button>
+                    </div>
+                    <p class="setting-description">
+                        Data is stored in browser localStorage. Export to backup, import to restore, reset to get sample data.
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Clear All Data</label>
+                    <button class="btn btn-danger" onclick="clearAllData()">
+                        <i class="fas fa-trash-alt"></i> Clear All Events
+                    </button>
+                    <p class="setting-description">
+                        Warning: This will permanently delete all your events!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="section-header">
+                <h2>Campus Life Planner Project</h2>
+                <p>Learn more about our application and contact information</p>
+            </div>
+            
+            <div class="about-card">
+                <div class="about-content">
+                    <h3 class="about-title">Campus Life Planner</h3>
+                    <p class="about-description">
+                        A comprehensive event management system designed for students to plan, track, and manage campus activities efficiently.
+                    </p>
+                    <p class="about-purpose">
+                        <strong>Purpose:</strong> This application helps students coordinate academic, social, and professional events while maintaining a balanced campus life.
+                    </p>
+                    
+                    <div class="contact-section">
+                        <h4 class="contact-title">Contact Information</h4>
+                        <div class="contact-links">
+                            <a href="https://github.com/BonaneNIYIGENA" class="contact-link" target="_blank" aria-label="Visit our GitHub repository">
+                                <i class="fab fa-github"></i>
+                                <span>GitHub Repository</span>
+                            </a>
+                            <a href="mailto:b.niyigena@alustudent.com" class="contact-link" aria-label="Send us an email">
+                                <i class="fas fa-envelope"></i>
+                                <span>Email Support</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="scripts/state.js"></script>
+    <script src="scripts/validator.js"></script>
+    <script src="scripts/storage.js"></script>
+    <script src="scripts/search.js"></script>
+    <script src="scripts/stats.js"></script>
+    <script src="scripts/ui.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            init();
+        });
+    </script>
+</body>
+</html>
