@@ -87,7 +87,7 @@ To run tests for form validation and sorting, open the `tests.html` file in your
 
 ## Demo Video
 
-[Link to Demo Video](https://drive.google.com/file/d/1ElHtfOPU6Ez54qNLRnCGUBe-_tIPczJh/view?usp=sharing)
+[Demo Video](https://drive.google.com/file/d/1ElHtfOPU6Ez54qNLRnCGUBe-_tIPczJh/view?usp=sharing)
 
 In the demo video, I showcase:
 - User Interface from ideation of the design to the final design
@@ -97,4 +97,4 @@ In the demo video, I showcase:
 
 ## Deployment
 The app is deployed online and accessible via GitHub Pages.
-[**GitHub Pages URL**](https://bonaneniyigena.github.io/Frontend-web-dev-summative-BonaneNIYIGENA/)
+[**Campus Planner Website**](https://bonaneniyigena.github.io/Frontend-web-dev-summative-BonaneNIYIGENA/)
