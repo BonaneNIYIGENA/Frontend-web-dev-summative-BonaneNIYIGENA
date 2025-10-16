@@ -85,10 +85,10 @@ To run tests for form validation and sorting, open the `tests.html` file in your
 - **Import JSON**: You can import event data using the "Import" option in settings. The data structure must be validated before loading.
 - **Export JSON**: Export your current events to a JSON file for backup or transfer.
 
-## Demo Video
+## Demo Video & Prototype
 
-[Demo Video](https://drive.google.com/file/d/1ElHtfOPU6Ez54qNLRnCGUBe-_tIPczJh/view?usp=sharing)
-[Figma Prototype](https://www.figma.com/proto/JqPOjgEDtyFS6kViENVplh/SUMMATIVE?node-id=2-2&p=f&t=1UqaEH7HcTxfMik5-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1)
+- [Demo Video](https://drive.google.com/file/d/1ElHtfOPU6Ez54qNLRnCGUBe-_tIPczJh/view?usp=sharing)
+- [Figma Prototype](https://www.figma.com/design/JqPOjgEDtyFS6kViENVplh/SUMMATIVE?node-id=2-2&t=UwAmYVmARHZ0YosS-1)
 
 In the demo video, I showcase:
 - User Interface from ideation of the design to the final design
