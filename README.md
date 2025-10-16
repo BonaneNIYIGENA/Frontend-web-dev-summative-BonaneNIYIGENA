@@ -2,6 +2,20 @@
 
 A responsive web application built using vanilla HTML, CSS, and JavaScript to manage your campus life events and tasks. This app allows you to add, edit, delete, and track events/tasks with features like data persistence, regex search, and accessibility enhancements.
 
+## Deployment
+[**Campus Planner Website**](https://bonaneniyigena.github.io/Frontend-web-dev-summative-BonaneNIYIGENA/)
+
+## Demo Video & Prototype
+
+- [Demo Video](https://drive.google.com/file/d/1ElHtfOPU6Ez54qNLRnCGUBe-_tIPczJh/view?usp=sharing)
+- [Figma Prototype](https://www.figma.com/design/JqPOjgEDtyFS6kViENVplh/SUMMATIVE?node-id=2-2&t=UwAmYVmARHZ0YosS-1)
+
+In the demo video, I showcase:
+- User Interface from ideation of the design to the final design
+- Regex search with edge cases.
+- Import/export functionality.
+- Responsive design across multiple devices.
+
 ## Features
 
 - **Responsive Layout**: Mobile-first design with breakpoints for tablet and desktop views.
@@ -85,17 +99,3 @@ To run tests for form validation and sorting, open the `tests.html` file in your
 - **Import JSON**: You can import event data using the "Import" option in settings. The data structure must be validated before loading.
 - **Export JSON**: Export your current events to a JSON file for backup or transfer.
 
-## Demo Video & Prototype
-
-- [Demo Video](https://drive.google.com/file/d/1ElHtfOPU6Ez54qNLRnCGUBe-_tIPczJh/view?usp=sharing)
-- [Figma Prototype](https://www.figma.com/design/JqPOjgEDtyFS6kViENVplh/SUMMATIVE?node-id=2-2&t=UwAmYVmARHZ0YosS-1)
-
-In the demo video, I showcase:
-- User Interface from ideation of the design to the final design
-- Regex search with edge cases.
-- Import/export functionality.
-- Responsive design across multiple devices.
-
-## Deployment
-The app is deployed online and accessible via GitHub Pages.
-[**Campus Planner Website**](https://bonaneniyigena.github.io/Frontend-web-dev-summative-BonaneNIYIGENA/)
